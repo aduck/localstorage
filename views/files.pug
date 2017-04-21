@@ -1,0 +1,32 @@
+extends layout
+
+block head
+  title 文件目录
+  style.
+    *{
+      margin:0;
+      padding:0;
+    }
+    ul,li{list-style:none;}
+    .container{width:100%;}
+    .container li{
+      border-bottom:1px solid #dfdfdf;
+      height:35px;
+      line-height:35px;
+      padding:0 15px;
+    }
+    .container li a{
+      display:block;
+      color:#666;
+      text-decoration:none;
+    }
+
+block body
+  .container
+    ul
+      each file in files
+        li
+          if reqpath
+            a(href=`/files/${reqpath}${file}`) #{file}
+          else
+            a(href=`/files/${file}`) #{file}

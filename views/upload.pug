@@ -1,0 +1,64 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+    title 上传文件
+    style.
+      *{
+        margin:0;
+        padding:0;
+      }
+      #upbtn{
+        margin-top:30px;
+        width:200px;
+        line-height:50px;
+        height:50px;
+        border:1px solid #ccc;
+        text-align:center;
+      }
+  body
+    input#upipt(type='file',multiple,name='localCloud')
+    #upbtn 开始上传
+    #upProcess
+    script.
+      var upipt=document.getElementById('upipt')
+      var upbtn=document.getElementById('upbtn')
+      var upProcess=document.getElementById('upProcess')
+      upbtn.addEventListener('click',uploadFiles,false)
+
+      function uploadFiles(){
+        var files=[].slice.call(upipt.files)
+        upipt.value=''
+        if(files.length<1){
+          upProcess.innerHTML="<span style='color:red'>请选择文件</span>"
+          return
+        }
+        upProcess.innerHTML=''
+        files.forEach(function(file){
+          var xhr=new XMLHttpRequest()
+          var formData=new FormData()
+          formData.append('localCloud',file)
+          
+          //xhr.
+          xhr.onprogress=function(e){
+            //upProcess.innerHTML+=`<p>文件 ${file.name} 上传中 ${e.loaded}/${e.total}</p>`
+          }
+          
+          xhr.open('POST','/upload',true)
+          xhr.send(formData)
+        })
+        /*
+        var xhr=new XMLHttpRequest()
+        var formData=new FormData()
+        files.forEach(file=>{
+          formData.append('localCloud',file)
+        })
+        xhr.onprogress=e=>{
+          upProcess.innerHTML='SSSSSSSS'
+        }
+        xhr.open('POST','/upload',true)
+        xhr.send(formData)
+        */
+      }
+      
